@@ -1,35 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My First Website</title>
-    <style>
-        body {
-            font-family: Arial;
-            text-align: center;
-            background-color: #f0f0f0;
-        }
-        h1 {
-            color: green;
-        }
-        button {
-            padding: 10px;
-            font-size: 16px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Calculator + Age Calculator</title>
+<style>
+    body {
+        font-family: Arial;
+        background: #f0f0f0;
+        text-align: center;
+        padding: 20px;
+    }
+    .container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        margin: auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    input {
+        width: 90%;
+        padding: 10px;
+        margin: 5px;
+        font-size: 16px;
+    }
+    button {
+        width: 60px;
+        height: 40px;
+        margin: 5px;
+        font-size: 18px;
+    }
+</style>
 </head>
-
 <body>
 
-    <h1>Welcome to My Website</h1>
-    <p>This is my first website 😄</p>
+<div class="container">
+    <h2>Calculator</h2>
+    <input type="text" id="display" disabled>
 
-    <button onclick="showMessage()">Click Me</button>
+    <br>
+    <button onclick="press(7)">7</button>
+    <button onclick="press(8)">8</button>
+    <button onclick="press(9)">9</button>
+    <button onclick="press('/')">/</button>
 
-    <script>
-        function showMessage() {
-            alert("Hello! You clicked the button 🎉");
-        }
-    </script>
+    <br>
+    <button onclick="press(4)">4</button>
+    <button onclick="press(5)">5</button>
+    <button onclick="press(6)">6</button>
+    <button onclick="press('*')">*</button>
+
+    <br>
+    <button onclick="press(1)">1</button>
+    <button onclick="press(2)">2</button>
+    <button onclick="press(3)">3</button>
+    <button onclick="press('-')">-</button>
+
+    <br>
+    <button onclick="press(0)">0</button>
+    <button onclick="press('.')">.</button>
+    <button onclick="calculate()">=</button>
+    <button onclick="press('+')">+</button>
+
+    <br>
+    <button onclick="clearDisplay()" style="width: 250px;">Clear</button>
+
+    <hr>
+
+    <h2>Age Calculator</h2>
+    <input type="date" id="dob">
+    <br>
+    <button onclick="calculateAge()">Calculate Age</button>
+    <p id="ageResult"></p>
+</div>
+
+<script>
+function press(value) {
+    document.getElementById("display").value += value;
+}
+
+function calculate() {
+    try {
+        document.getElementById("display").value =
+            eval(document.getElementById("display").value);
+    } catch {
+        alert("Invalid Input");
+    }
+}
+
+function clearDisplay() {
+    document.getElementById("display").value = "";
+}
+
+function calculateAge() {
+    let dob = document.getElementById("dob").value;
+    if (!dob) {
+        alert("Please select date");
+        return;
+    }
+
+    let birthDate = new Date(dob);
+    let today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    let m = today.getMonth() - birthDate.getMonth();
+
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+
+    document.getElementById("ageResult").innerText =
+        "Your Age is: " + age + " years";
+}
+</script>
 
 </body>
 </html>
